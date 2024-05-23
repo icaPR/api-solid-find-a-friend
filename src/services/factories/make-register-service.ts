@@ -2,8 +2,8 @@ import { PrismaOrgsRepository } from "@/repositories/prisma/prisma-orgs-reposito
 import { RegisterService } from "../orgs-register";
 
 export function makeRegisterService() {
-  const prismaUsersRepository = new PrismaOrgsRepository();
-  const service = new RegisterService(prismaUsersRepository);
+  const prismaOrgsRepository = new PrismaOrgsRepository();
+  const service = new RegisterService(prismaOrgsRepository);
 
   return service;
 }

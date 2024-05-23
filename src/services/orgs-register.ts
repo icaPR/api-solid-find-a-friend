@@ -2,7 +2,7 @@ import { OrgsRepository } from "@/repositories/orgs-repository";
 import { Org } from "@prisma/client";
 import { hash } from "bcryptjs";
 
-interface RegisterServiceProps {
+interface RegisterServiceRequest {
   name: string;
   email: string;
   cep: string;
@@ -25,7 +25,7 @@ export class RegisterService {
     address,
     phone_whatsapp,
     password,
-  }: RegisterServiceProps): Promise<RegisterServiceResponse> {
+  }: RegisterServiceRequest): Promise<RegisterServiceResponse> {
     const password_hash = await hash(password, 5);
 
     const orgWiithSamePhone = await this.orgsRepository.findByPhone(
