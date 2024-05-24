@@ -18,7 +18,7 @@ export async function authenticate(req: FastifyRequest, res: FastifyReply) {
       password,
     });
 
-    const token = await res.jwtSign({ sign: { sub: org.id } });
+    const token = await res.jwtSign({}, { sign: { sub: org.id } });
     return res.status(200).send({ token });
   } catch (e) {
     throw e;
