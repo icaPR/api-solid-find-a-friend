@@ -36,8 +36,9 @@ export async function create(req: FastifyRequest, res: FastifyReply) {
   } = registerBodyScheme.parse(req.body);
 
   const registerService = makeCreatePetService();
+  console.log(req.user.sub);
   await registerService.handleCreate({
-    orgId: req.user.sign.sub,
+    orgId: req.user.sub,
     name,
     about,
     age,
