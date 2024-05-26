@@ -7,4 +7,20 @@ export class PrismaPetsRepository implements PetsRepository {
     const pet = await prisma.pet.create({ data });
     return pet;
   }
+  async findByCEP(cityCep: string) {
+    const pets = await prisma.pet.findMany({
+      where: {
+        org: {
+          cep: {
+            startsWith: cityCep,
+          },
+        },
+      },
+      include: {
+        org: true,
+      },
+    });
+
+    return pets;
+  }
 }
