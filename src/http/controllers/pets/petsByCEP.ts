@@ -3,11 +3,11 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
 export async function petsByCEP(req: FastifyRequest, res: FastifyReply) {
-  const fetchByCEPBParamsScheme = z.object({
+  const fetchByCEPParamsScheme = z.object({
     cityCep: z.string(),
   });
 
-  const { cityCep } = fetchByCEPBParamsScheme.parse(req.params);
+  const { cityCep } = fetchByCEPParamsScheme.parse(req.params);
 
   const fetchByCEPService = makeFetchPetByCEPService();
   const pets = await fetchByCEPService.hanldeFetchPetCEP({
