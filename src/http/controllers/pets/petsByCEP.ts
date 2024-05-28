@@ -10,7 +10,7 @@ export async function petsByCEP(req: FastifyRequest, res: FastifyReply) {
   const { cityCep } = fetchByCEPParamsScheme.parse(req.params);
 
   const fetchByCEPService = makeFetchPetByCEPService();
-  const pets = await fetchByCEPService.hanldeFetchPetCEP({
+  const { pets } = await fetchByCEPService.hanldeFetchPetCEP({
     cityCep,
   });
   return res.status(200).send({ pets });

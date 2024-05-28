@@ -28,7 +28,7 @@ export async function petsByAttributes(req: FastifyRequest, res: FastifyReply) {
   const { cityCep } = fetchByCEPParamsScheme.parse(req.params);
   console.log(age);
   const fetchByCEPService = makeFetchByAttributesService();
-  const pets = await fetchByCEPService.hanldeFetchByAttributes({
+  const { pets } = await fetchByCEPService.hanldeFetchByAttributes({
     cityCep,
     age,
     size,

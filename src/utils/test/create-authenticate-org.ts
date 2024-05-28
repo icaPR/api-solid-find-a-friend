@@ -4,8 +4,9 @@ import { hash } from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
 export async function CreateAndAuthenticateOrg(app: FastifyInstance) {
-  await prisma.org.create({
+  const org = await prisma.org.create({
     data: {
+      id: "exampleId",
       name: "name test",
       email: "email@test.com",
       cep: "123456",
@@ -20,5 +21,5 @@ export async function CreateAndAuthenticateOrg(app: FastifyInstance) {
     .send({ email: "email@test.com", password: "123456" });
   const { token } = authResponse.body;
 
-  return { token };
+  return { token, org };
 }
