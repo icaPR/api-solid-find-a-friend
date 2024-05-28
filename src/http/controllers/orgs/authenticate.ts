@@ -19,7 +19,19 @@ export async function authenticate(req: FastifyRequest, res: FastifyReply) {
     });
 
     const token = await res.jwtSign({}, { sign: { sub: org.id } });
-    return res.status(200).send({ token });
+    const refreshToken = await res.jwtSign({
+      sign: { sub: org.id, expiresIn: "7d" },
+    }); // 7 days
+
+    return res
+      .setCookie("refreshToken", refreshToken, {
+        path: "/",
+        secure: true,
+        sameSite: true,
+        httpOnly: true,
+      })
+      .status(200)
+      .send({ token });
   } catch (e) {
     throw e;
   }
