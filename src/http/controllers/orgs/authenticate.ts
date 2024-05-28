@@ -1,3 +1,4 @@
+import { InvalidCredentials } from "@/services/errors/invalid-credentials";
 import { makeAuthenticateService } from "@/services/factories/make-authenticate-service";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
@@ -33,6 +34,9 @@ export async function authenticate(req: FastifyRequest, res: FastifyReply) {
       .status(200)
       .send({ token });
   } catch (e) {
+    if (e instanceof InvalidCredentials) {
+      return res.status(400).send({ message: e.message });
+    }
     throw e;
   }
 }

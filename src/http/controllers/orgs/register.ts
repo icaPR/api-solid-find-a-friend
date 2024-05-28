@@ -1,4 +1,4 @@
-import { UserAlreadyExists } from "@/services/errors/user-already-exists";
+import { DataAlreadyExists } from "@/services/errors/data-already-exists";
 import { makeRegisterService } from "@/services/factories/make-register-service";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
@@ -28,7 +28,7 @@ export async function register(req: FastifyRequest, res: FastifyReply) {
       password,
     });
   } catch (e) {
-    if (e instanceof UserAlreadyExists) {
+    if (e instanceof DataAlreadyExists) {
       return res.status(409).send({ message: e.message });
     }
   }

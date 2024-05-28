@@ -1,7 +1,7 @@
 import { OrgsRepository } from "@/repositories/orgs-repository";
 import { Org } from "@prisma/client";
 import { hash } from "bcryptjs";
-import { UserAlreadyExists } from "./errors/user-already-exists";
+import { DataAlreadyExists } from "./errors/data-already-exists";
 
 interface RegisterServiceRequest {
   name: string;
@@ -35,10 +35,10 @@ export class RegisterService {
     const orgWithSameEmail = await this.orgsRepository.findByPhone(email);
 
     if (orgWithSameEmail) {
-      throw new UserAlreadyExists();
+      throw new DataAlreadyExists();
     }
     if (orgWithSamePhone) {
-      throw new UserAlreadyExists();
+      throw new DataAlreadyExists();
     }
 
     const org = await this.orgsRepository.create({
