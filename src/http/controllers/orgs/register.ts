@@ -1,3 +1,4 @@
+import { UserAlreadyExists } from "@/services/errors/user-already-exists";
 import { makeRegisterService } from "@/services/factories/make-register-service";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
@@ -27,7 +28,9 @@ export async function register(req: FastifyRequest, res: FastifyReply) {
       password,
     });
   } catch (e) {
-    throw e;
+    if (e instanceof UserAlreadyExists) {
+      return res.status(409).send({ message: e.message });
+    }
   }
 
   return res.status(201).send();

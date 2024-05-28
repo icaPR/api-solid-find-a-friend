@@ -1,6 +1,7 @@
 import { OrgsRepository } from "@/repositories/orgs-repository";
 import { Org } from "@prisma/client";
 import { hash } from "bcryptjs";
+import { UserAlreadyExists } from "./errors/user-already-exists";
 
 interface RegisterServiceRequest {
   name: string;
@@ -28,16 +29,16 @@ export class RegisterService {
   }: RegisterServiceRequest): Promise<RegisterServiceResponse> {
     const password_hash = await hash(password, 5);
 
-    const orgWiithSamePhone = await this.orgsRepository.findByPhone(
+    const orgWithSamePhone = await this.orgsRepository.findByPhone(
       phone_whatsapp
     );
-    const orgWiithSameEmail = await this.orgsRepository.findByPhone(email);
+    const orgWithSameEmail = await this.orgsRepository.findByPhone(email);
 
-    if (orgWiithSamePhone) {
-      throw new Error();
+    if (orgWithSameEmail) {
+      throw new UserAlreadyExists();
     }
-    if (orgWiithSameEmail) {
-      throw new Error();
+    if (orgWithSamePhone) {
+      throw new UserAlreadyExists();
     }
 
     const org = await this.orgsRepository.create({
