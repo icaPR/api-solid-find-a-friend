@@ -13,8 +13,14 @@ interface FilterProps {
   independence?: "LOW" | "AVERAGE" | "HIGH";
 }
 
+interface PetDetailsProps {
+  pet: Pet | null;
+  phphone_whatsapp: string | undefined;
+}
+
 export interface PetsRepository {
   create(data: Prisma.PetUncheckedCreateInput): Promise<Pet>;
   findByCEP(cityCep: string): Promise<Pet[]>;
   fetchByAttributes(attribute: FilterProps, cityCep: string): Promise<Pet[]>;
+  findById(id: string): Promise<PetDetailsProps>;
 }

@@ -36,7 +36,6 @@ export class PrismaPetsRepository implements PetsRepository {
 
     return pets;
   }
-
   async fetchByAttributes(
     { age, size, energy_level, independence }: FilterProps,
     cityCep: string
@@ -61,5 +60,15 @@ export class PrismaPetsRepository implements PetsRepository {
     });
 
     return pets;
+  }
+  async findById(id: string) {
+    const pet = await prisma.pet.findUnique({ where: { id } });
+    const phone = await prisma.org.findUnique({ where: { id: pet?.orgId } });
+
+    const petDetails = {
+      pet: pet,
+      phphone_whatsapp: phone?.phone_whatsapp,
+    };
+    return petDetails;
   }
 }
