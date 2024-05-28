@@ -14,10 +14,10 @@ describe("Create pet (e2e)", () => {
   });
 
   it("should be able to create a pet", async () => {
-    const { token } = await CreateAndAuthenticateOrg(app);
+    const { token, org } = await CreateAndAuthenticateOrg(app);
 
     const data = {
-      orgId: "exeampleId",
+      orgId: org.id,
       name: "Pet",
       about: "Nice dog.",
       age: "PUPPY",
